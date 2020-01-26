@@ -10,7 +10,7 @@
 
 ## Özellikler
 
-- Based on [zxcvbn](https://github.com/dropbox/zxcvbn) (by [DropBox](https://github.com/dropbox)).
+- [DropBox](https://github.com/dropbox) tarafından kullanılan [zxcvbn](https://github.com/dropbox/zxcvbn) tabanlıdır.
 - Şifre zorluk dereceleri "Çok zayıf", "Zayıf", "Fena değil", "Güçlü" ve "Çok güçlü" olarak etiketlendirilmiştir.
 - Görüntüleme modu değiştirilebilir.
 - Gereken bütün kaynak dosyaları paket içindedir.
