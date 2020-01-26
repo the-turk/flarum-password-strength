@@ -1,6 +1,6 @@
 {
   "name": "the-turk/flarum-password-strength",
-  "description": "Low-budget password strength estimation for your forum.",
+  "description": "Low-budget password strength estimation for your Flarum forum.",
   "keywords": [
     "flarum",
     "password",
