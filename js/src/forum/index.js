@@ -4,7 +4,7 @@ import extractText from 'flarum/utils/extractText';
 import app from 'flarum/app';
 import SignUpModal from 'flarum/components/SignUpModal';
 
-const localePrefix = 'the-turk-password-strength.forum.';
+const localePrefix = 'the-turk-password-strength.forum.strengthLabels.';
 const settingsPrefix = 'passwordStrength';
 const spanClassName = 'PasswordStrength';
 

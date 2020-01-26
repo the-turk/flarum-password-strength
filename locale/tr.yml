@@ -14,8 +14,9 @@ the-turk-password-strength:
       colorHelp:              RGB (Red, Green, Blue) değerlerini R,G,B şeklinde kullanın
 
   forum:
-    veryWeak:                 Çok zayıf
-    weak:                     Zayıf
-    average:                  Fena değil
-    strong:                   Güçlü
-    veryStrong:               Çok güçlü
+    strengthLabels:
+      veryWeak:               Çok zayıf
+      weak:                   Zayıf
+      average:                Fena değil
+      strong:                 Güçlü
+      veryStrong:             Çok güçlü
