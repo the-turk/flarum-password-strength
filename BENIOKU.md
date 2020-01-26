@@ -40,7 +40,7 @@ Eklentiyi aktif edin ve istediğiniz biçimde özelleştirin.
 
 ## Bağlantılar
 
-- [Flarum tartışma konusu](https://discuss.flarum.org/)
+- [Flarum tartışma konusu](https://discuss.flarum.org/d/22624-password-strength-indicator)
 - [GitHub üzerindeki kaynak kodu](https://github.com/the-turk/flarum-password-strength)
 - [Değişiklikler](https://github.com/the-turk/flarum-password-strength/blob/master/CHANGELOG.md)
 - [Sorun bildir](https://github.com/the-turk/flarum-password-strength/issues)

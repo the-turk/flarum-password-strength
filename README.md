@@ -40,7 +40,7 @@ Just enable the extension and customize if you wish.
 
 ## Links
 
-- [Flarum Discuss post](https://discuss.flarum.org/)
+- [Flarum Discuss post](https://discuss.flarum.org/d/22624-password-strength-indicator)
 - [Source code on GitHub](https://github.com/the-turk/flarum-password-strength)
 - [Changelog](https://github.com/the-turk/flarum-password-strength/blob/master/CHANGELOG.md)
 - [Report an issue](https://github.com/the-turk/flarum-password-strength/issues)
