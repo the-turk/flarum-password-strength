@@ -136,7 +136,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var localePrefix = 'the-turk-password-strength.forum.';
+var localePrefix = 'the-turk-password-strength.forum.strengthLabels.';
 var settingsPrefix = 'passwordStrength';
 var spanClassName = 'PasswordStrength';
 var weakColor, strongColor, strengthColor, inputStyle, spanSelector;
