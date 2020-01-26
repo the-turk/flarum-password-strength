@@ -1,0 +1,39 @@
+{
+  "name": "the-turk/flarum-password-strength",
+  "description": "Low-budget password strength estimation for your forum.",
+  "keywords": [
+    "flarum",
+    "password",
+    "strength",
+    "checker"
+  ],
+  "type": "flarum-extension",
+  "license": "MIT",
+  "authors": [{
+    "name": "Hasan Özbey",
+    "email": "hasanoozbey@gmail.com",
+    "homepage": "https://github.com/the-turk"
+  }],
+  "support": {
+    "issues": "https://github.com/the-turk/flarum-password-strength/issues",
+    "source": "https://github.com/the-turk/flarum-password-strength"
+  },
+  "require": {
+    "flarum/core": ">=0.1.0-beta.10 <0.1.0-beta.12"
+  },
+  "autoload": {
+    "psr-4": {
+      "TheTurk\\PasswordStrength\\": "src/"
+    }
+  },
+  "extra": {
+    "flarum-extension": {
+      "title": "Password Strength Indicator",
+      "icon": {
+        "name": "fas fa-user-shield",
+        "backgroundColor": "#b72a2a",
+        "color": "#fff"
+      }
+    }
+  }
+}

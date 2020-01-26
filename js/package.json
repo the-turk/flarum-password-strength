@@ -1,0 +1,21 @@
+{
+  "name": "@the-turk/flarum-password-strength",
+  "description": "Low-budget password strength estimation for your forum.",
+  "license": "MIT",
+  "version": "0.1.0",
+  "dependencies": {
+    "copy-webpack-plugin": "^5.1.1",
+    "flarum-webpack-config": "0.1.0-beta.10",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "zxcvbn": "^4.4.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/the-turk/flarum-password-strength.git"
+  },
+  "scripts": {
+    "watch": "webpack --mode development --watch",
+    "build": "webpack --mode production"
+  }
+}

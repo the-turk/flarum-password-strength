@@ -1,0 +1,21 @@
+the-turk-password-strength:
+  admin:
+    settings:
+      title:                  Şifre Zorluk Derecesi Belirteci Ayarları
+      enableLabel:            Etiketleri göster
+      displayMode:            Görüntüleme modunu seçin
+      enableInputColor:       Şifre zorluğuyla birlikte girdinin ön plan rengini değiştir
+      enableInputBackground:  Şifre zorluğuyla birlikte girdinin arka plan rengini değiştir
+      noInputColor:           Girdinin renklerini değiştirme
+      colorOptions:           Renk seçenekleri
+      weakColor:              En zayıf şifre rengi
+      strongColor:            En güçlü şifre rengi
+      foreColor:              Şifre girdisinin ön plan rengi
+      colorHelp:              RGB (Red, Green, Blue) değerlerini R,G,B şeklinde kullanın
+
+  forum:
+    veryWeak:                 Çok zayıf
+    weak:                     Zayıf
+    average:                  Fena değil
+    strong:                   Güçlü
+    veryStrong:               Çok güçlü
