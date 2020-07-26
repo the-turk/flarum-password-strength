@@ -11,7 +11,7 @@
  * @author     Hasan Özbey <hasanoozbey@gmail.com>
  * @copyright  2020
  * @license    The MIT License
- * @version    Release: 1.0.0
+ * @version    Release: 1.0.1
  * @link       https://github.com/the-turk/password-strength
  */
 

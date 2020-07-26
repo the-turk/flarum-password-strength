@@ -1,3 +1,7 @@
+### 1.0.1
+
+- **Remove** custom placeholders.
+
 ### 1.0.0
 
 I practically rewritten and redesigned the whole thing.
