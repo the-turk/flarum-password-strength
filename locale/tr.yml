@@ -26,7 +26,3 @@ the-turk-password-strength:
       weak:                   Zayıf
       medium:                 Daha iyi olabilir
       strong:                 Güçlü
-    signUpModal:
-      placeholder:            Güçlü bir şifre girin...
-    logInModal:
-      placeholder:            Şifrenizi girin...

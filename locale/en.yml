@@ -20,13 +20,9 @@ the-turk-password-strength:
       otherOptions:           Other Options
       enableInputColor:       Change input's foreground color with password strength score
       enableInputBorderColor: Change input's border color with password strength score
-      enablePasswordToggle:   Enable password visibility toggle with custom placeholder for both Sign Up and Log In modals
+      enablePasswordToggle:   Enable password visibility toggle for both Sign Up and Log In modals
   forum:
     strengthLabels:
       weak:                   Weak
       medium:                 Could be stronger
       strong:                 Strong
-    signUpModal:
-      placeholder:            Type a strong password...
-    logInModal:
-      placeholder:            Type your password...

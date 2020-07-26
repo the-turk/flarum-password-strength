@@ -86,7 +86,7 @@ app.initializers.add("the-turk-password-strength", () => {
           m("input[type=password].FormControl .togglable", {
             name: "password",
             placeholder: extractText(
-              app.translator.trans(localePrefix + "logInModal.placeholder")
+              app.translator.trans("core.forum.log_in.password_placeholder")
             ),
             value: this.password(),
             bidi: this.password,
@@ -109,9 +109,6 @@ app.initializers.add("the-turk-password-strength", () => {
       const enablePasswordToggle = app.forum.attribute(
         "psEnablePasswordToggle"
       );
-      const placeholder = enablePasswordToggle
-        ? localePrefix + "signUpModal.placeholder"
-        : "core.forum.sign_up.password_placeholder";
       // Colors
       const weakColor = app.forum.attribute("psWeakColor");
       const mediumColor = app.forum.attribute("psMediumColor");
@@ -125,7 +122,9 @@ app.initializers.add("the-turk-password-strength", () => {
               (enablePasswordToggle ? " .togglable" : ""),
             {
               name: "password",
-              placeholder: extractText(app.translator.trans(placeholder)),
+              placeholder: extractText(
+                app.translator.trans("core.forum.sign_up.password_placeholder")
+              ),
               value: this.password(),
               disabled: this.loading,
               oninput: (e) => {
