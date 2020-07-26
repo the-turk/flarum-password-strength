@@ -1,123 +1,196 @@
-import { extend } from 'flarum/extend';
-import zxcvbn from '../../dist/zxcvbn.js';
-import extractText from 'flarum/utils/extractText';
-import app from 'flarum/app';
-import SignUpModal from 'flarum/components/SignUpModal';
+import app from "flarum/app";
+import { extend } from "flarum/extend";
+import extractText from "flarum/utils/extractText";
+import LogInModal from "flarum/components/LogInModal";
+import SignUpModal from "flarum/components/SignUpModal";
 
-const localePrefix = 'the-turk-password-strength.forum.strengthLabels.';
-const settingsPrefix = 'passwordStrength';
-const spanClassName = 'PasswordStrength';
+const localePrefix = "the-turk-password-strength.forum.";
 
-let weakColor, strongColor, strengthColor, inputStyle, spanSelector;
+app.initializers.add("the-turk-password-strength", () => {
+  let hasLoaded = false;
+  let isLoading = false;
+  let strengthLabel;
 
-const strengthChecker = function(value) {
-  var checkPassword = zxcvbn(value);
-  var result = {};
+  const load = () => {
+    isLoading = true;
 
-  result.score = checkPassword.score;
+    $.getScript(
+      "//cdn.jsdelivr.net/npm/zxcvbn@4.4.2/dist/zxcvbn.min.js",
+      () => {
+        isLoading = false;
+        hasLoaded = true;
+      }
+    );
+  };
 
-  switch (result.score) {
-    case 0:
-      result.info = app.translator.trans(localePrefix + 'veryWeak');
-      break;
-    case 1:
-      result.info = app.translator.trans(localePrefix + 'weak');
-      break;
-    case 2:
-      result.info = app.translator.trans(localePrefix + 'average');
-      break;
-    case 3:
-      result.info = app.translator.trans(localePrefix + 'strong');
-      break;
-    case 4:
-      result.info = app.translator.trans(localePrefix + 'veryStrong');
-      break;
+  const toggler = m("i.fa .fa-eye .password-toggle", {
+    config: (e) => {
+      const $passwordInput = $(".Password-group > input");
+      const attr = $passwordInput.attr("type");
+
+      if ($(e).hasClass("fa-eye-slash") && attr != "text") {
+        $passwordInput.attr("type", "text");
+      } else if ($(e).hasClass("fa-eye") && attr != "password") {
+        $passwordInput.attr("type", "password");
+      }
+    },
+    onclick: (e) => {
+      $(e.target).toggleClass("fa-eye").toggleClass("fa-eye-slash");
+      $(".Password-group > input").focus();
+    },
+  });
+
+  function strengthChecker(value) {
+    let result = {};
+
+    result.score = zxcvbn(value).score;
+
+    switch (result.score) {
+      case 0:
+      case 1:
+        result.info = app.translator.trans(
+          localePrefix + "strengthLabels.weak"
+        );
+        break;
+      case 2:
+      case 3:
+        result.info = app.translator.trans(
+          localePrefix + "strengthLabels.medium"
+        );
+        break;
+      case 4:
+        result.info = app.translator.trans(
+          localePrefix + "strengthLabels.strong"
+        );
+        break;
+    }
+
+    return result;
   }
 
-  return result;
-}
+  function colorizeInput(element, color) {
+    if (app.forum.attribute("psEnableInputBorderColor")) {
+      element.style.borderColor = color;
+    }
 
-// Interpolate value between two colors.
-// Value is number from 0-1. 0 Means color A, 0.5 middle etc.
-// Adapted from
-// /kimmobrunfeldt/progressbar.js/blob/gh-pages/examples/password-strength/main.js
-const interpolateColor = function(rgbA, rgbB, value) {
-  var rDiff = rgbA[0] - rgbB[0];
-  var gDiff = rgbA[1] - rgbB[1];
-  var bDiff = rgbA[2] - rgbB[2];
-  value = 1 - value;
-  return [
-    rgbB[0] + rDiff * value,
-    rgbB[1] + gDiff * value,
-    rgbB[2] + bDiff * value
-  ];
-}
+    if (app.forum.attribute("psEnableInputColor")) {
+      element.style.color = color;
+    }
+  }
 
-const rgbArrayToString =
-  (rgb) => 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
-
-app.initializers.add('the-turk-password-strength', () => {
-  extend(SignUpModal.prototype, 'fields', function(items) {
-    if (!this.props.token) {
-      if (app.forum.attribute(settingsPrefix + 'EnableLabel') === true) {
-        items.add('the-turk-password-strength', m('.Form-group', [
-          m('span', {
-            className: spanClassName,
-            style: 'display:none;'
+  extend(LogInModal.prototype, "fields", function (items) {
+    if (app.forum.attribute("psEnablePasswordToggle")) {
+      items.replace(
+        "password",
+        m(".Form-group .Password-group", [
+          m("input[type=password].FormControl .togglable", {
+            name: "password",
+            placeholder: extractText(
+              app.translator.trans(localePrefix + "logInModal.placeholder")
+            ),
+            value: this.password(),
+            bidi: this.password,
+            disabled: this.loading,
           }),
-        ]), 5);
-      }
+          toggler,
+        ]),
+        20
+      );
+    }
+  });
 
-      items.replace('password', m('.Form-group', [
-        m('input[type=password].FormControl', {
-          name: 'password',
-          placeholder: extractText(app.translator.trans('core.forum.sign_up.password_placeholder')),
-          value: this.password(),
-          style: inputStyle,
-          oninput: e => {
-            if (e.target.value && e.target.value.length > 0) {
-              const weakColor = app.forum.attribute(settingsPrefix + 'WeakColor');
-              const strongColor = app.forum.attribute(settingsPrefix + 'StrongColor');
-              const foreColor = app.forum.attribute(settingsPrefix + 'ForeColor');
-              const displayMode = app.forum.attribute(settingsPrefix + 'DisplayMode');
+  extend(SignUpModal.prototype, "config", function (original, isInitialized) {
+    if (isInitialized && !hasLoaded && !isLoading) load();
+  });
 
-              var progress = strengthChecker(e.target.value).score / 4;
+  extend(SignUpModal.prototype, "fields", function (items) {
+    if (!this.props.token) {
+      const $strengthIndicator = $("div.strengthIndicator");
+      const enablePasswordToggle = app.forum.attribute(
+        "psEnablePasswordToggle"
+      );
+      const placeholder = enablePasswordToggle
+        ? localePrefix + "signUpModal.placeholder"
+        : "core.forum.sign_up.password_placeholder";
+      // Colors
+      const weakColor = app.forum.attribute("psWeakColor");
+      const mediumColor = app.forum.attribute("psMediumColor");
+      const strongColor = app.forum.attribute("psStrongColor");
 
-              if (progress === 0) {
-                progress = 0.1;
-              }
+      items.replace(
+        "password",
+        m(".Form-group .Password-group", [
+          m(
+            "input[type=password].FormControl" +
+              (enablePasswordToggle ? " .togglable" : ""),
+            {
+              name: "password",
+              placeholder: extractText(app.translator.trans(placeholder)),
+              value: this.password(),
+              disabled: this.loading,
+              oninput: (e) => {
+                if (hasLoaded) {
+                  const result = strengthChecker(e.target.value);
+                  const score = result.score;
+                  strengthLabel = result.info;
 
-              strengthColor = rgbArrayToString(
-                interpolateColor(weakColor, strongColor, progress)
-              );
+                  if (e.target.value && e.target.value.length > 0) {
+                    switch (score) {
+                      case 0:
+                      case 1:
+                        $(".pill--strong, .pill--average").addClass(
+                          "pill--gray"
+                        );
+                        colorizeInput(e.target, weakColor);
+                        break;
+                      case 2:
+                      case 3:
+                        $(".pill--strong").addClass("pill--gray");
+                        $(".pill--average").removeClass("pill--gray");
+                        colorizeInput(e.target, mediumColor);
+                        break;
+                      case 4:
+                        $(".pill--strong, .pill--average").removeClass(
+                          "pill--gray"
+                        );
+                        colorizeInput(e.target, strongColor);
+                        break;
+                    }
 
-              if (displayMode == 'inputColor' || displayMode == 'inputBgColor') {
-                inputStyle =
-                  (displayMode == 'inputBgColor' ?
-                    (foreColor != '' ? 'color:' +
-                      rgbArrayToString(foreColor) + ';' : '') +
-                    'background-' : '') + 'color:' + strengthColor + ';';
-              }
+                    if ($strengthIndicator.is(":hidden"))
+                      $strengthIndicator.show("fast");
+                  } else {
+                    // https://stackoverflow.com/a/4036868/12866913
+                    colorizeInput(e.target, "");
 
-              if (app.forum.attribute(settingsPrefix + 'EnableLabel') === true) {
-                spanSelector = this.$('span.' + spanClassName)[0];
+                    if ($strengthIndicator.is(":visible"))
+                      $strengthIndicator.hide("fast");
+                  }
+                }
 
-                spanSelector.innerText = strengthChecker(e.target.value).info;
-                spanSelector.style.display = 'block';
-                spanSelector.style.color = strengthColor;
-              }
-            } else {
-              inputStyle = '';
-              if (app.forum.attribute(settingsPrefix + 'EnableLabel') === true) {
-                spanSelector.style.display = 'none';
-              }
+                this.password(e.target.value);
+              },
             }
-
-            this.password(e.target.value);
-          },
-          disabled: this.loading
-        }),
-      ]), 10);
+          ),
+          enablePasswordToggle ? toggler : "",
+          m(
+            "div.strengthIndicator",
+            m("div.strengthIndicator--flex", [
+              m("div.strengthIndicator--pills", [
+                m("div.pill--weak", { style: "background-color:" + weakColor }),
+                m("div.pill--average pill--gray", {
+                  style: "background-color:" + mediumColor,
+                }),
+                m("div.pill--strong pill--gray", {
+                  style: "background-color:" + strongColor,
+                }),
+              ]),
+              m("div.strengthIndicator--label", <span>{strengthLabel}</span>),
+            ])
+          ),
+        ]),
+        10
+      );
     }
   });
 });

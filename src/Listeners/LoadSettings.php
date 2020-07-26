@@ -14,13 +14,6 @@ class LoadSettings
     protected $settings;
 
     /**
-     * @var string $settingsPrefix
-     */
-    public $settingsPrefix = 'the-turk-password-strength.';
-
-    /**
-     * LoadSettingsFromDatabase constructor
-     *
      * @param SettingsRepositoryInterface $settings
      */
     public function __construct(SettingsRepositoryInterface $settings)
@@ -47,56 +40,40 @@ class LoadSettings
     public function prepareApiAttributes(Serializing $event)
     {
         if ($event->isSerializer(ForumSerializer::class)) {
-            // Set RGB values as an array
-            $weakColor = $this->commaToArray(
-                $this->settings->get(
-                    // settings key
-                    $this->settingsPrefix.'weakColor',
-                    // default value
-                    '252, 91, 63'
-                )
-            );
-            $strongColor = $this->commaToArray(
-                $this->settings->get(
-                    // settings key
-                    $this->settingsPrefix.'strongColor',
-                    // default value
-                    '111, 213, 127'
-                )
-            );
-            $foreColor = $this->commaToArray(
-                $this->settings->get(
-                    // settings key
-                    $this->settingsPrefix.'foreColor',
-                    // default value
-                    ''
-                )
-            );
+            $settingsPrefix = 'the-turk-password-strength.';
 
             $event->attributes += [
-                'passwordStrengthWeakColor' => (array)$weakColor,
-                'passwordStrengthStrongColor' => (array)$strongColor,
-                'passwordStrengthForeColor' => (array)$foreColor,
-                'passwordStrengthEnableLabel' => (bool)$this->settings->get($this->settingsPrefix.'enableLabel', true),
-                'passwordStrengthDisplayMode' => (string)$this->settings->get($this->settingsPrefix.'displayMode', 'inputColor'),
+                'psWeakColor' => 'rgb(' .
+                    $this->settings->get(
+                        $settingsPrefix.'weakColor',
+                        '255,129,128'
+                    ) . ')',
+                'psMediumColor' => 'rgb(' .
+                    $this->settings->get(
+                        $settingsPrefix.'mediumColor',
+                        '249,197,117'
+                    ) . ')',
+                'psStrongColor' => 'rgb(' .
+                    $this->settings->get(
+                        $settingsPrefix.'strongColor',
+                        '111,199,164'
+                    ) . ')',
+                'psEnableInputColor' => (bool)
+                    $this->settings->get(
+                        $settingsPrefix.'enableInputColor',
+                        false
+                    ),
+                'psEnableInputBorderColor' => (bool)
+                    $this->settings->get(
+                        $settingsPrefix.'enableInputBorderColor',
+                        true
+                    ),
+                'psEnablePasswordToggle' => (bool)
+                    $this->settings->get(
+                        $settingsPrefix.'enablePasswordToggle',
+                        true
+                    ),
             ];
         }
-    }
-
-    /**
-     * Returns comma seperated list as an array.
-     *
-     * @param string $list
-     * @return array
-     */
-    public function commaToArray(string $list): array
-    {
-        $r = [];
-
-        if (!empty($list)) {
-            $r = array_map('intval', array_filter(preg_split('/[\s,]+/', trim($list)), 'strlen'));
-        }
-
-        return $r;
     }
 }

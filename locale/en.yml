@@ -2,21 +2,31 @@ the-turk-password-strength:
   admin:
     settings:
       title:                  Password Strength Indicator Settings
-      enableLabel:            Show the strength label
-      displayMode:            Choose a display mode
-      enableInputColor:       Change input's foreground color with password strength score
-      enableInputBackground:  Change input's background color with password strength score
-      noInputColor:           Don't change input's colors
-      colorOptions:           Color Options
-      weakColor:              Color of the weak password
-      strongColor:            Color of the strong password
-      foreColor:              Foreground color of the password input element
-      colorHelp:              Use RGB (Red, Green, Blue) values as R,G,B
 
+      ####################
+      #   Color Options  #
+      ####################
+
+      colorOptions:           Color Options
+      colorHelp:              Use RGB (Red, Green, Blue) values as R,G,B
+      weakColor:              Color of the weak password
+      mediumColor:            Color of the medium password
+      strongColor:            Color of the strong password
+
+      ####################
+      #   Other Options  #
+      ####################
+
+      otherOptions:           Other Options
+      enableInputColor:       Change input's foreground color with password strength score
+      enableInputBorderColor: Change input's border color with password strength score
+      enablePasswordToggle:   Enable password visibility toggle with custom placeholder for both Sign Up and Log In modals
   forum:
     strengthLabels:
-      veryWeak:               Very weak
       weak:                   Weak
-      average:                Average
+      medium:                 Could be stronger
       strong:                 Strong
-      veryStrong:             Very strong
+    signUpModal:
+      placeholder:            Type a strong password...
+    logInModal:
+      placeholder:            Type your password...

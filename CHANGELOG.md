@@ -1,3 +1,17 @@
+### 1.0.0
+
+I practically rewritten and redesigned the whole thing.
+
+- Load `zxcvbn` only when it is necessary (via CDN).
+- Now we have three labels as 'Weak', 'Could be stronger' and 'Strong' instead of five. Also you can't disable these labels from the settings modal anymore.
+    + Strength score is 0/4 or 1/4 -> Weak
+	  + Strength score is 2/4 or 3/4 -> Could be stronger
+	  + Strength score is 4/4 -> Strong
+- **Add** password visibility toggle option.
+    + Okay I know we already have [Show Password](https://discuss.flarum.org/d/22727-show-password) for this. But I just wanted to do something that'll look good together with the strength indicator.
+- **Remove** "Change input's background color with password strength score" option.
+- Run prettier for all JS files.
+
 ### 0.1.3
 
 - **Add** Indonesian translations.

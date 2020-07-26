@@ -1,0 +1,70 @@
+.LogInModal,
+.SignUpModal {
+  .Password-group {
+    position: relative;
+
+    input.FormControl.togglable {
+      text-align: left !important;
+      padding-right: 50px !important;
+    }
+
+    i.password-toggle {
+      position: absolute;
+      width: 20px;
+      top: 17px;
+      right: 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  }
+}
+
+.SignUpModal .strengthIndicator {
+  display: none;
+
+  & > .strengthIndicator--flex {
+    margin-top: 10px;
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+    & > .strengthIndicator--pills {
+      width: 100%;
+      height: 5px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+
+      div {
+        border-radius: @border-radius;
+        width: 31%;
+        padding: 2.5px;
+
+        &.pill--gray {
+          background-color: @control-color !important;
+          opacity: 0.3;
+        }
+      }
+    }
+
+    & > .strengthIndicator--label {
+      width: 100%;
+      text-align: left;
+
+      span {
+        font-weight: bold;
+        padding-left: 13px;
+      }
+    }
+  }
+}

@@ -1,92 +1,103 @@
-import app from 'flarum/app';
-import SettingsModal from 'flarum/components/SettingsModal';
-import Switch from 'flarum/components/Switch';
-import Select from 'flarum/components/Select';
+import app from "flarum/app";
+import SettingsModal from "flarum/components/SettingsModal";
+import Switch from "flarum/components/Switch";
 
-// just to make things easier
-const settingsPrefix = 'the-turk-password-strength.';
-const translationPrefix = 'the-turk-password-strength.admin.settings.';
+const settingsPrefix = "the-turk-password-strength.";
+const localePrefix = "the-turk-password-strength.admin.settings.";
 
 export default class PasswordStrengthSettingsModal extends SettingsModal {
   title() {
-    return app.translator.trans(translationPrefix + 'title');
+    return app.translator.trans(localePrefix + "title");
   }
 
   /**
    * Build modal form.
-   *
-   * @returns {*}
    */
   form() {
     return [
-      m('.Form-group', [
-        m('label', Switch.component({
-          state: this.setting(settingsPrefix + 'enableLabel', '1')() === '1',
-          children: app.translator.trans(translationPrefix + 'enableLabel'),
-          onchange: value => {
-            this.setting(settingsPrefix + 'enableLabel')(value ? '1' : '0');
-          }
-        }))
-      ]),
-      m('.Form-group', [
-        m('label', app.translator.trans(translationPrefix + 'displayMode')),
-        m('div', Select.component({
-          options: {
-            inputColor: app.translator.trans(translationPrefix + 'enableInputColor'),
-            inputBgColor: app.translator.trans(translationPrefix + 'enableInputBackground'),
-            noInputColor: app.translator.trans(translationPrefix + 'noInputColor'),
-          },
-          onchange: this.setting(settingsPrefix + 'displayMode'),
-          value: this.setting(settingsPrefix + 'displayMode')() ||
-            this.setting(settingsPrefix + 'displayMode')('inputColor')
-        })),
-      ]),
-      m('.Form-group', [
-        m('label', app.translator.trans(translationPrefix + 'colorOptions')),
-        m('.helpText', app.translator.trans(translationPrefix + 'colorHelp')),
-      ]),
-      m('.Form-group', [
-        m('div', {
-            className: 'passwordStrengthInlineDivLabel'
-          },
-          m('.helpText', app.translator.trans(translationPrefix + 'weakColor'))
+      m(".Form-group", [
+        m(
+          "label.psHeading",
+          app.translator.trans(localePrefix + "colorOptions")
         ),
-        m('div', {
-            className: 'passwordStrengthInlineDivInput'
-          },
-          m('input[type=text].FormControl', {
-            bidi: this.setting(settingsPrefix + 'weakColor', '252, 91, 63')
-          }),
+        m(".helpText .psHelpText", [
+          m("i.fas fa-exclamation-circle"),
+          m("span", app.translator.trans(localePrefix + "colorHelp")),
+        ]),
+      ]),
+      m(".Form-group .psSettingsFlex", [
+        m("p", app.translator.trans(localePrefix + "weakColor")),
+        m("input[type=text].FormControl", {
+          bidi: this.setting(settingsPrefix + "weakColor", "255,129,128"),
+        }),
+      ]),
+      m(".Form-group .psSettingsFlex", [
+        m("p", app.translator.trans(localePrefix + "mediumColor")),
+        m("input[type=text].FormControl", {
+          bidi: this.setting(settingsPrefix + "mediumColor", "249,197,117"),
+        }),
+      ]),
+      m(".Form-group .psSettingsFlex", [
+        m("p", app.translator.trans(localePrefix + "strongColor")),
+        m("input[type=text].FormControl", {
+          bidi: this.setting(settingsPrefix + "strongColor", "111,199,164"),
+        }),
+      ]),
+      m(".Form-group", [
+        m(
+          "label.psHeading",
+          app.translator.trans(localePrefix + "otherOptions")
         ),
       ]),
-      m('.Form-group', [
-        m('div', {
-            className: 'passwordStrengthInlineDivLabel'
-          },
-          m('.helpText', app.translator.trans(translationPrefix + 'strongColor'))
-        ),
-        m('div', {
-            className: 'passwordStrengthInlineDivInput'
-          },
-          m('input[type=text].FormControl', {
-            bidi: this.setting(settingsPrefix + 'strongColor', '111, 213, 127')
-          }),
+      m(".Form-group", [
+        m(
+          "label",
+          Switch.component({
+            state:
+              this.setting(settingsPrefix + "enableInputColor", "0")() === "1",
+            children: app.translator.trans(localePrefix + "enableInputColor"),
+            onchange: (value) => {
+              this.setting(settingsPrefix + "enableInputColor")(
+                value ? "1" : "0"
+              );
+            },
+          })
         ),
       ]),
-      m('.Form-group', [
-        m('div', {
-            className: 'passwordStrengthInlineDivLabel'
-          },
-          m('.helpText', app.translator.trans(translationPrefix + 'foreColor'))
+      m(".Form-group", [
+        m(
+          "label",
+          Switch.component({
+            state:
+              this.setting(settingsPrefix + "enableInputBorderColor", "1")() ===
+              "1",
+            children: app.translator.trans(
+              localePrefix + "enableInputBorderColor"
+            ),
+            onchange: (value) => {
+              this.setting(settingsPrefix + "enableInputBorderColor")(
+                value ? "1" : "0"
+              );
+            },
+          })
         ),
-        m('div', {
-            className: 'passwordStrengthInlineDivInput'
-          },
-          m('input[type=text].FormControl', {
-            bidi: this.setting(settingsPrefix + 'foreColor', ''),
-            placeholder: '0, 0, 0',
-            disabled: this.setting(settingsPrefix + 'displayMode', 'inputColor')() != 'inputBgColor'
-          }),
+      ]),
+      m(".Form-group", [
+        m(
+          "label",
+          Switch.component({
+            state:
+              this.setting(settingsPrefix + "enablePasswordToggle", "1")() ===
+              "1",
+            children: app.translator.trans(
+              localePrefix + "enablePasswordToggle"
+            ),
+            onchange: (value) => {
+              this.setting(settingsPrefix + "enablePasswordToggle")(
+                value ? "1" : "0"
+              );
+            },
+          })
         ),
       ]),
     ];
