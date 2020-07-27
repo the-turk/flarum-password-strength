@@ -2,7 +2,7 @@
   "name": "@the-turk/flarum-password-strength",
   "description": "Low-budget password strength estimation for your Flarum forum.",
   "license": "MIT",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "dependencies": {
     "flarum-webpack-config": "0.1.0-beta.10",
     "webpack": "^4.44.0",

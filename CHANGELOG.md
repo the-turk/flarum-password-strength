@@ -1,3 +1,11 @@
+### `1.0.2`
+
+- Placeholders weren't fully centered thanks to `padding-right: 50px;` value that comes with the eye icon. Fixed this by adding `padding-left: 50px;`. I also removed the unnecessary `!important` property on paddings so RTL readers can relocate the icon to the left and use right aligned placeholder.
+
+**Known issues:**
+
+Password visibility toggle conflicts with the `therealsujitk/flarum-ext-show-password`
+
 ### 1.0.1
 
 - **Remove** custom placeholders.
